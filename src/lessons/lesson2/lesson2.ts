@@ -1,4 +1,4 @@
-console.log('lesson 2');
+console.log( 'lesson 2' );
 
 // Lexical environment
 // http://jsflow.org/docs/lex-env/
@@ -23,6 +23,9 @@ console.log('lesson 2');
 
 // Task 01
 // Реализовать функцию sum которая суммирует 2 числа следующим образом sum(3)(6) === 9
+
+const sum = ( a: number ) => ( b: number ) => a + b;
+
 
 // Task 02
 // Реализовать функцию makeCounter которая работает следующим образом:
@@ -50,6 +53,8 @@ console.log('lesson 2');
 // 4) superSum(3)(2,5,3) //10
 // 5) superSum(3)(2,5)(3) //10
 // 6) superSum(3)(2,5)(3,9) //10
+
+
 
 // P.S. типизируйте только аргументы, а при вызове функции используйте @ts-ignore
 

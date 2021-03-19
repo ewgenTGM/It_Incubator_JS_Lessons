@@ -1,6 +1,6 @@
 import React from 'react';
 import CurrencyExchange from '../../components/CurrencyExchange/CurrencyExchange';
-import { CurrencyType } from '../../redux/currencyReducer';
+import { CurrencyStateType, CurrencyType } from '../../redux/currencyReducer';
 import {
   ChangeAction,
   ChangeCurrencyField,
@@ -8,11 +8,19 @@ import {
   TypedDispatch
 } from '../../redux/actions';
 import { useSelector } from 'react-redux';
-import { selectCurrencyState } from '../../redux/selectors';
+import { IRootState, selectCurrencyState } from '../../redux/selectors';
 
 const CurrencyEContainer: React.FC = () => {
 
   const dispatch = TypedDispatch();
+
+  // const {
+  //   currencies,
+  //   currentCurrency,
+  //   isBuying,
+  //   amountOfBYN,
+  //   amountOfCurrency
+  // } = useSelector( selectCurrencyState );
 
   const {
     currencies,
@@ -20,7 +28,7 @@ const CurrencyEContainer: React.FC = () => {
     isBuying,
     amountOfBYN,
     amountOfCurrency
-  } = useSelector( selectCurrencyState );
+  } = useSelector<IRootState, CurrencyStateType>( state => state.currency );
 
   // Текущий курс
   let currencyRate: number = 0;
