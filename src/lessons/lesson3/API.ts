@@ -7,11 +7,8 @@ const configOMB = {
 const key = '3b945e44';
 const axiosInstance = axios.create( configOMB );
 
-const API = {
+export const API = {
   searchFilmsByTitle: ( title: string ): Promise<AxiosResponse<IMovieInfo>> => axiosInstance.get( `?t=${ title }&apikey=${ key }` ),
-  searchFilmsByType: ( title: string, type: string ) => {
-  }
+  searchFilmsByType: ( title: string, type: string ) => axiosInstance.get( `?t=${ title }&type=${ type }&apikey=${ key }` )
+
 };
-
-
-export default API;

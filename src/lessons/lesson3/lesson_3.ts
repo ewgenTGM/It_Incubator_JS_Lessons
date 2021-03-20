@@ -1,4 +1,25 @@
-console.log('lesson 3');
+import axios, { AxiosPromise } from 'axios';
+
+console.log( 'lesson 3' );
+
+const config = {
+  baseURL: 'https://jsonplaceholder.typicode.com'
+};
+
+interface IPost {
+  body: string
+  id: number
+  title: string
+  userId: number
+}
+
+const axiosInstance = axios.create( config );
+
+export const JSPAPI = {
+  getAllPost: (): AxiosPromise<Array<IPost>> => axiosInstance.get( `posts` ).then( res => res.data ),
+  getPostById: ( postId: number ): AxiosPromise<IPost> => axiosInstance.get( `posts/${ postId }` ).then( res => res.data )
+};
+
 
 // Event loop
 // https://learn.javascript.ru/event-loop
@@ -17,4 +38,4 @@ console.log('lesson 3');
 
 
 // just a plug
-export default ()=>{};
+export default () => {};
