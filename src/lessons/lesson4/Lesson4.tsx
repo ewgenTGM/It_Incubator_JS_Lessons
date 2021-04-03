@@ -26,6 +26,7 @@ const Lesson4 = () => {
     } );
     promise.then( result => console.log( result ) );
   };
+
   /*Begin task 05*/
   type HandlePromiseType = {
     promise: Promise<string> | null
@@ -34,6 +35,7 @@ const Lesson4 = () => {
     onSuccess: ( paramName: string ) => void
     onError: ( paramName: string ) => void
   }
+
   const handlePromise: HandlePromiseType = {
     promise: null,
     resolve: null,
@@ -41,14 +43,18 @@ const Lesson4 = () => {
     onSuccess(paramName) {console.log( `Promise is resolved with data: ${ paramName }` );},
     onError(paramName) {console.log( `Promise is rejected with error: ${ paramName }` );}
   };
-
+  //@ts-ignore
+  window.handlePromise = handlePromise;
   const createPromise = () => {
-    handlePromise.resolve = handlePromise.onSuccess;
-    handlePromise.reject = handlePromise.onError;
-    handlePromise.promise = new Promise<string>( ( resolve, reject ) => {} );
-
+    handlePromise.promise = new Promise<string>( ( resolve, reject ) => {
+      handlePromise.resolve = resolve;
+      handlePromise.reject = reject;
+    } );
+    handlePromise.promise.then(handlePromise.onSuccess);
+    handlePromise.promise.catch(handlePromise.onError)
     console.log( handlePromise );
   };
+
   const resolvePromise = () => {
     handlePromise.resolve && handlePromise.resolve( 'Resolve parameter' );
 
@@ -56,6 +62,7 @@ const Lesson4 = () => {
   const rejectPromise = () => {
     handlePromise.reject && handlePromise.reject( 'Reject parameter' );
   };
+
   /*End task 05*/
 
 
