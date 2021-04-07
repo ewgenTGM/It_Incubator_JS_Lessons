@@ -25,18 +25,18 @@ console.log( 'Lesson 5' );
 // Дан объект someObj, реализуйте функцию greeting и присвойте ее ключу объекта с аналогичным именем.
 // Функция должна вернуть строку `My name is ${name}. I am ${age}`, где name и age берутся из свойств объекта
 
-type someObjType = {
+type SomeObjType = {
   name: string
   age: number
   greeting?: () => void
 }
 
-let someObj: someObjType = {
+let someObj: SomeObjType = {
   name: 'Eugene',
   age: 32
 };
 
-function greeting( this: someObjType ) {
+function greeting( this: SomeObjType ) {
   console.log( `My name is ${ this.name }. I am ${ this.age }` );
 }
 
@@ -52,18 +52,109 @@ someObj.greeting = greeting;
 // rest current count - устанавливает значение счетчика равным 0
 // все методы должны ссылаться на сам объект
 
+type CounterType = {
+  currentCount: number
+  getCurrentCount: () => number
+  increment: () => void
+  decrement: () => void,
+  setCurrentCount: ( value: number ) => void,
+  restCurrentCount: () => void
+}
+
+const counter: CounterType = {
+  currentCount: 0,
+  getCurrentCount() {
+    return this.currentCount;
+  },
+  increment() {
+    this.currentCount++;
+  },
+  decrement() {
+    this.currentCount--;
+  },
+  setCurrentCount( value ) {
+    this.currentCount = value;
+  },
+  restCurrentCount() {
+    this.currentCount = 0;
+  }
+};
+//1
+console.log( counter.currentCount );
+//2
+counter.increment();
+counter.increment();
+console.log( counter.currentCount );
+//3
+counter.decrement();
+console.log( counter.currentCount );
+//4
+counter.setCurrentCount( 7 );
+console.log( counter.currentCount );
+//5
+counter.restCurrentCount();
+console.log( counter.currentCount );
+
+
 // Task 03
 // переделайте код из Task 02, что бы сработал следующий код:
 // counter.setCurrentCount(10).increment().increment().increment().decrement().getCurrentCount() // 12
+
+type SuperCounterType = {
+  currentCount: number
+  getCurrentCount: () => number
+  increment: () => SuperCounterType
+  decrement: () => SuperCounterType,
+  setCurrentCount: ( value: number ) => SuperCounterType
+  restCurrentCount: () => SuperCounterType
+}
+
+const superCounter: SuperCounterType = {
+  currentCount: 0,
+  getCurrentCount() {
+    return this.currentCount;
+  },
+  increment() {
+    this.currentCount++;
+    return this;
+  },
+  decrement() {
+    this.currentCount--;
+    return this;
+  },
+  setCurrentCount( value ) {
+    this.currentCount = value;
+    return this;
+  },
+  restCurrentCount() {
+    this.currentCount = 0;
+    return this;
+  }
+};
+
+console.log(superCounter.setCurrentCount(10).increment().increment().increment().decrement().getCurrentCount())
 
 // Task 04
 // Написать функцию конструктор myFirstConstructorFunc которая принимает 2 параметра name и age и возвращает объект
 // у которого будут эти свойства и метод greeting из Task 01
 
+const myFirstConstructorFunc = function ( name: string, age: number ): SomeObjType {
+  return {
+    name: name,
+    age: age,
+    greeting: greeting
+  };
+};
+
+const f = myFirstConstructorFunc( 'Ewgeni', 35 );
+f.greeting && f.greeting();
+
+
 // Task 05 есть 2 объекта One и Two. С помощью bind и метода sayHello заставьте поздороваться объект One
 
 let One = { name: 'One' };
 let Two = { name: 'Two', sayHello: function () {console.log( `Hello, my name is ${ this.name }` );} };
+Two.sayHello.bind( One )();
 
 // Task 06
 // создайте объект helperObj у которого есть следующие методы:
